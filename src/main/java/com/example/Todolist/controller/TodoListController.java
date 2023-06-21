@@ -56,7 +56,7 @@ public class TodoListController {
         } else {
             //エラーあり
             mv.setViewName("todoForm"); //6
-            // mv.addObject("todoData", todoData); この文は省略可能
+            mv.addObject("todoData", todoData); //この文は省略可能
             return mv;
         }
     }
@@ -65,6 +65,6 @@ public class TodoListController {
     // 「処理3」Todo入力画面で[キャンセル登録]ボタンがクリックされたとき
     @PostMapping("/todo/cancel")
     public String cancel() {
-        return "redirect/todo";
+        return "redirect:/todo";
     }
 }

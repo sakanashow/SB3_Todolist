@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>ToDo List</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
+    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
 </head>
 <body>
-<form action="@{/}" method="post" th:object="${todoData}"><!--１-->
+<form th:action="@{/}" method="post" th:object="${todoData}"><!--１-->
     <table>
         <tr>
             <th>件名</th>

@@ -1,8 +1,9 @@
 package com.example.Todolist.entity;
 
-import java.sql.Date;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.sql.Date;
 
 @Entity //1 このクラスがエンティティであることを示す
 @Table(name="todo") //2　対応しているテーブルを指定する。これによりTodoオブジェクトへの操作は自動的にtodoテーブルのレコードに対する操作になる
@@ -17,14 +18,15 @@ public class Todo {
     private String title;
 
     @Column(name = "importance")
-    private String importance;
+    private Integer importance;
 
     @Column(name = "urgency")
-    private String urgency;
+    private Integer urgency;
 
     @Column(name = "deadline")
-    private String deadline;
+    private Date deadline;
 
     @Column(name = "done")
     private String done;
+
 }

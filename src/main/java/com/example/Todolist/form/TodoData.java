@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 public class TodoData {
     private Integer id;
 
+    @NotNull
     @NotBlank(message = "件名を入力してください")
     private String title;
 
@@ -31,15 +32,15 @@ public class TodoData {
         Todo todo = new Todo();
         todo.setId(id);
         todo.setTitle(title);
-        todo.setImportance(String.valueOf(importance));
-        todo.setUrgency(String.valueOf(urgency));
+        todo.setImportance(importance);
+        todo.setUrgency(urgency);
         todo.setDone(done);
 
         SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
         long ms;
         try {
             ms = sdFormat.parse(deadline).getTime();
-            todo.setDeadline(String.valueOf(new Date(ms)));
+            todo.setDeadline(new Date(ms));
         } catch (ParseException e){
             todo.setDeadline(null);
         }
