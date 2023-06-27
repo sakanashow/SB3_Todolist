@@ -8,6 +8,15 @@
 <body>
 <form th:action="@{/}" method="post" th:object="${todoData}"><!--１-->
     <table>
+        <!--todolist3で追加開始-->
+        <tr>
+            <th>id</th>
+            <td>
+                <span th:text="*{id}"></span>
+                <input type="hidden" th:field="*{id}"> <!--本来はユーザーに見せる必要がない。サーバーに送信されないためhidden要素になっている-->
+            </td>
+        </tr>
+        <!--todolist3で追加終了-->
         <tr>
             <th>件名</th>
             <td>
@@ -49,10 +58,17 @@
             </td>
         </tr>
     </table>
-    <div>
+    <!--todolist3で変更開始-->
+    <div th:if="${session.mode == 'update'}"> <!--modeは表示するボタンを決めるためのもの-->
+        <button type="submit" th:formaction="@{/todo/update}">更新</button>
+        <button type="submit" th:formaction="@{/todo/delete}">削除</button>
+        <button type="submit" th:formaction="@{/todo/cancel}">キャンセル</button>
+    </div>
+    <div th:unless="${session.mode == 'update'}"> <!--th:unlseeは条件式がfalseの時この要素を作成する-->
         <button type="submit" th:formaction="@{/todo/create}">登録</button>
         <button type="submit" th:formaction="@{/todo/cancel}">キャンセル</button>
     </div>
+    <!--todolist3で変更終了-->
 </form>
 </body>
 </html>
