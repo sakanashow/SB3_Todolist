@@ -2,6 +2,7 @@ package com.example.Todolist.controller;
 
 import com.example.Todolist.entity.Todo;
 import com.example.Todolist.form.TodoData;
+import com.example.Todolist.form.TodoQuery;
 import com.example.Todolist.repository.TodoRepository;
 import com.example.Todolist.service.TodoService;
 import jakarta.servlet.http.HttpSession;
@@ -29,11 +30,12 @@ public class TodoListController {
 
     //todo1
     @GetMapping("/todo")
-    public ModelAndView showTodoList(ModelAndView mv) {
+    public ModelAndView showTodoList(ModelAndView mv) { //最小に表示する一覧画面の処理
         //一覧を検索して表示する
         mv.setViewName("todoList");
         List<Todo> todoList = todoRepository.findAll(); //3 TodoRepositoryで自動生成されるメソッドを使用
         mv.addObject("todoList", todoList); //4
+        mv.addObject("todoQuery", new TodoQuery()); //todo4で追加
         return mv;
     }
 
@@ -85,7 +87,7 @@ public class TodoListController {
         if(!result.hasErrors()&&isValid) {
             //エラーなし
             Todo todo =todoData.toEntity();
-            todoRepository.saveAndFlush(todo); //1 更新方法はcreateで行った方法と同じ
+            todoRepository.saveAndFlush(todo); // 更新方法はcreateで行った方法と同じ
             return "redirect:/todo";
         } else {
             //エラーあり
@@ -105,5 +107,20 @@ public class TodoListController {
     @PostMapping("/todo/cancel")
     public String cancel() {
         return "redirect:/todo";
+    }
+
+    @PostMapping("/todo/query")
+    public ModelAndView queryTodo(@ModelAttribute TodoQuery todoQuery, //検索ボタンが押された時の処理
+                                  BindingResult result, //バリデーションはないがサービスでチェックするためBindingResultは引数に残しておく
+                                  ModelAndView mv) {
+        mv.setViewName("todoList");
+        List<Todo> todoList = null;
+        if (todoService.isValid(todoQuery, result)) { //独自チェックはここで行う
+            //エラーがなければ追加
+            todoList = todoService.doQuery(todoQuery); //上でエラーがなければ入力された条件で検索する
+        }
+        //mv.addObject("todoQuery", todoQuery); //
+        mv.addObject("todoList", todoList); //6
+        return mv;
     }
 }

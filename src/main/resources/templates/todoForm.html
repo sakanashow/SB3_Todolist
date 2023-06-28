@@ -65,7 +65,7 @@
         <button type="submit" th:formaction="@{/todo/cancel}">キャンセル</button>
     </div>
     <div th:unless="${session.mode == 'update'}"> <!--th:unlseeは条件式がfalseの時この要素を作成する-->
-        <button type="submit" th:formaction="@{/todo/create}">登録</button>
+        <button type="submit" th:formaction="@{/todo/create/do}">登録</button>
         <button type="submit" th:formaction="@{/todo/cancel}">キャンセル</button>
     </div>
     <!--todolist3で変更終了-->
